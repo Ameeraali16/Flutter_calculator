@@ -26,6 +26,9 @@ class CalculatorProvider extends ChangeNotifier{
       case "=":
         compute();
         break;
+      case "%":
+        convertToPercentage();
+        break;
       default:
         compController.text += value;
       
@@ -51,6 +54,21 @@ class CalculatorProvider extends ChangeNotifier{
   void clearHistory() {
     _history.clear();
     notifyListeners();
+  }
+
+  void convertToPercentage() {
+    String text = compController.text;
+
+    if (text.isNotEmpty) {
+      try {
+        double currentValue = double.parse(text);
+        currentValue = currentValue / 100; // Convert to percentage
+        compController.text = currentValue.toString();
+      } catch (e) {
+        // Handle error in case of invalid input
+        compController.text = "Error";
+      }
+    }
   }
 
  
